@@ -160,6 +160,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   androidMinAspectRatio: 1
   applicationIdentifier:
+    Android: BlueLine.Import
     Standalone: com.DefaultCompany.2DProject
   buildNumber:
     Bratwurst: 0
