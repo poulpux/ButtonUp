@@ -8,14 +8,14 @@ public class MenuDefilant_Singleton : MonoBehaviour
 {
     [HideInInspector] public UnityEvent TryOpenEvent = new UnityEvent();
     [HideInInspector] public UnityEvent TryCloseEvent = new UnityEvent();
-    public static event Action OnOpen, OnClose;
+    [HideInInspector] public UnityEvent OnOpenEvent = new UnityEvent();
+    [HideInInspector] public UnityEvent OnCloseEvent = new UnityEvent();
 
-
-    private bool isNotInteractible, open;
-    private float timeStateChange;
     [SerializeField] private float closePosX, openPosX;
     [SerializeField] private SpriteRenderer cacheNoir;
 
+    private bool isNotInteractible, open;
+    private float timeStateChange;
 
     private static MenuDefilant_Singleton instance;
     public static MenuDefilant_Singleton Instance { get { return instance; } }
@@ -32,60 +32,52 @@ public class MenuDefilant_Singleton : MonoBehaviour
 
     void Start()
     {
-        TryCloseEvent.AddListener(() => StartCoroutine(TryClose()));
-        TryOpenEvent.AddListener(() => StartCoroutine(TryOpen()));
+        TryCloseEvent.AddListener(() => StartCoroutine(TryInteract(false)));
+        TryOpenEvent.AddListener(() => StartCoroutine(TryInteract(true)));
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public IEnumerator TryClose()
+    public IEnumerator TryInteract(bool stateWanted)
     {
-        if(isNotInteractible || !open)
+        if(isNotInteractible || open == stateWanted)
             yield break;
         else
         {
-            isNotInteractible = true;
-            timeStateChange = 0f;
+            InitCoroutine();
 
-            while (timeStateChange <= 0.25f)
+            while (timeStateChange <= 0.18f)
             {
-                MoveMenu();
+                Transition();
                 yield return null;
             }
 
-            isNotInteractible = false;
-            open = false;
-            OnClose?.Invoke();
+            EndCoroutine();
             yield break;
         }
     }
-    public IEnumerator TryOpen()
+    
+    private void InitCoroutine()
     {
-        if(isNotInteractible || open)
-            yield break;
-        else
-        {
-            isNotInteractible = true;
-            timeStateChange = 0f;
-
-            while (timeStateChange <= 0.25f)
-            {
-                MoveMenu();
-                yield return null;
-            }
-
-            isNotInteractible = false;
-            open = true;
-            OnOpen?.Invoke();
-            yield break;
-        }
+        isNotInteractible = true;
+        timeStateChange = 0f;
     }
 
-    private void MoveMenu()
+    private void EndCoroutine()
+    {
+        isNotInteractible = false;
+        open = !open;
+        if(open)
+            OnOpenEvent.Invoke();
+        else
+            OnCloseEvent.Invoke();
+    }
+
+    private void Transition()
     {
         timeStateChange += Time.deltaTime;
 
-        float t = Mathf.Clamp01(timeStateChange / 0.25f);
+        float t = Mathf.Clamp01(timeStateChange / 0.18f);
         float lerpedValue = Mathf.Lerp(!open? closePosX : openPosX, !open ? openPosX : closePosX, t);
         transform.position = new Vector3(lerpedValue, transform.position.y, transform.position.z);
         cacheNoir.material.color = new Color(cacheNoir.material.color.r, cacheNoir.material.color.g, cacheNoir.material.color.b,!open ? t * 0.8f : 0.8f- t * 0.8f);

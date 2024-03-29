@@ -10,22 +10,15 @@ public class LeaveMenuDefilant : MonoBehaviour, ICliquable
     Collider2D _collider;
     public Collider2D colliderr { get => _collider; set => _collider = value; }
 
-    private void Awake()
+    private void Start()
     {
         _collider = GetComponent<BoxCollider2D>();
         Close();
+        MenuDefilant_Singleton.Instance.OnCloseEvent.AddListener(() => Close());
+        MenuDefilant_Singleton.Instance.OnOpenEvent.AddListener(() => Open());
     }
 
-    private void OnEnable()
-    {
-        MenuDefilant_Singleton.OnClose += Close;
-        MenuDefilant_Singleton.OnOpen += Open;
-    }
-    private void OnDisable()
-    {
-        MenuDefilant_Singleton.OnClose -= Close;
-        MenuDefilant_Singleton.OnOpen -= Open;
-    }
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public void Activate()
     {
