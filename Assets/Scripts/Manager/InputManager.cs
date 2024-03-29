@@ -33,7 +33,6 @@ public class InputManager : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
     }
 
