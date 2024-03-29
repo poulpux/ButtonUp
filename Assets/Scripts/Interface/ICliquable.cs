@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface ICliquable
 {
-    Collider2D collider { get; set; }
+    [SerializeField] Collider2D collider { get; set; }
     public void Activate();
 }

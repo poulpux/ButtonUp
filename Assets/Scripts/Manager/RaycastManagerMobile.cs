@@ -43,22 +43,37 @@ public class RaycastManagerMobile : MonoBehaviour
         pointerEventData = new PointerEventData(eventSystem);
         InputManager.Instance.tap.AddListener((pos) =>
         {
-            RaycastHit(pos);
+            RaycastHitTap(pos);
         });
 
         InputManager.Instance.press.AddListener((touch) =>
         {
-            RaycastHit(touch.currentPosition);
+            RaycastHitHold(touch.currentPosition);
+        });
+        
+        InputManager.Instance.fingerUp.AddListener((touch) =>
+        {
+            RaycastHitEnd(touch.currentPosition);
         });
 
     }
 
     //----------------------------------------------------------------------------------------------------
 
-    private void RaycastHit(Vector3 pos)
+    private void RaycastHitTap(Vector3 pos)
     {
         if (_currentScene == 0 && GameUI(pos) == false)
             Game(pos);
+    }
+    private void RaycastHitHold(Vector3 pos)
+    {
+        //if (_currentScene == 0 && GameUI(pos) == false)
+        //    Game(pos);
+    }
+    private void RaycastHitEnd(Vector3 pos)
+    {
+        //if (_currentScene == 0 && GameUI(pos) == false)
+        //    Game(pos);
     }
 
     private bool GameUI(Vector3 pos)
@@ -79,11 +94,9 @@ public class RaycastManagerMobile : MonoBehaviour
     private void Game(Vector3 pos)
     {
         Ray ray = _camera.ScreenPointToRay(pos);
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
-        {
-            hit.collider?.GetComponent<ICliquable>()?.Activate();
-        }
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        
+        hit.collider?.GetComponent<ICliquable>()?.Activate();
     }
 }
