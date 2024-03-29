@@ -1,35 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class Theme : MonoBehaviour
-{
-    public List<SubScene> allSubScene = new List<SubScene>();
-    public string nameTheme = "default";
-    [HideInInspector] public int weight;
-
-    private void Awake()
-    {
-        weight = 1 + allSubScene.Count;
-    }
-}
-
-
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(TextMeshPro))]
 public class SubScene : MonoBehaviour, ICliquable
 {
-    Collider2D _collider;
-    public Collider2D colliderr { get => _collider; set => _collider = value; }
+    [SerializeField] private GameObject icone;
 
+    public Collider2D colliderr { get => _collider; set => _collider = value; }
     public string nameSubScene = "default";
-    public GameObject content, image;
+    
+
+    private Collider2D _collider;
+    private TextMeshPro text;
     void Start()
     {
-        _collider = GetComponent<BoxCollider2D>();
+        text = GetComponent<TextMeshPro>(); 
+        _collider = GetComponent<Collider2D>(); 
+
+        text.text = nameSubScene;
+        GameObject icon = Instantiate(icone, transform);
+        icon.transform.position = new Vector3(-2.4f, 0.36f, 0f);
+        icon.transform.localScale = Vector3.one / transform.localScale.x;
     }
 
     public void Activate()
     {
+        print("activate");
         MenuDefilant_Singleton.Instance.SwitchSubSceneEvent.Invoke(this);
     }
 }
