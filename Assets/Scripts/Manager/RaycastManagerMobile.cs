@@ -57,39 +57,8 @@ public class RaycastManagerMobile : MonoBehaviour
 
     private void RaycastHit(Vector3 pos)
     {
-        if (_currentScene == 0 && MenuUI(pos) == false)
-            Menu(pos);
-        else if (_currentScene == 1 && GameUI(pos) == false)
+        if (_currentScene == 0 && GameUI(pos) == false)
             Game(pos);
-    }
-
-    private bool MenuUI(Vector3 pos)
-    {
-        pointerEventData.position = pos;
-        List<RaycastResult> results = new List<RaycastResult>();
-        UIRaycaster.Raycast(pointerEventData, results);
-
-        if (results.Count > 0)
-        {
-            //Your UnityEvent
-            return true;
-        }
-
-        return false;
-    }
-
-    private void Menu(Vector3 pos)
-    {
-        Ray ray = _camera.ScreenPointToRay(pos);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider.tag == "YourTag")
-            {
-                //Your UnityEvent
-            }
-        }
     }
 
     private bool GameUI(Vector3 pos)
@@ -114,11 +83,7 @@ public class RaycastManagerMobile : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.tag == "YourTag")
-            {
-                //Your UnityEvent
-            }
+            hit.collider?.GetComponent<ICliquable>()?.Activate();
         }
     }
-
 }
