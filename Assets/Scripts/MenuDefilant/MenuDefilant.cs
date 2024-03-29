@@ -1,17 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class TestCliquable : MonoBehaviour, ICliquable
+public class MenuDefilant : MonoBehaviour
 {
-    [SerializeField] Collider2D _collider;
-    public Collider2D colliderr { get => _collider; set => _collider = value; }
-
-    public void Activate()
-    {
-
-    }
-
+    public UnityEvent TryOpen = new UnityEvent();
     // Start is called before the first frame update
     void Start()
     {
