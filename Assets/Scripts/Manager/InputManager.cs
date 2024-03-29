@@ -48,52 +48,67 @@ public class InputManager : MonoBehaviour
         {
             foreach (var touch in Input.touches)
             {
-                if (touch.phase == TouchPhase.Began)
+                TouchBegin(touch);
+                TouchHold(touch);
+                TouchEnd(touch);
+            }
+        }
+    }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private void TouchBegin(Touch touch)
+    {
+        if (touch.phase == TouchPhase.Began)
+        {
+            // Initialisation des données pour un nouveau toucher
+            TouchPress newTouch = new TouchPress();
+            newTouch.startPosition = touch.position;
+            newTouch.touch = touch;
+            savedTouches.Add(newTouch);
+
+            // Événement de tap
+            tap.Invoke((Vector3)touch.position);
+        }
+    }
+
+    private void TouchHold(Touch touch)
+    {
+        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+        {
+            // Mise à jour des données pour les touchers en mouvement ou statiques
+            foreach (var savedTouch in savedTouches)
+            {
+                if (touch.fingerId == savedTouch.touch.fingerId)
                 {
-                    // Initialisation des données pour un nouveau toucher
-                    TouchPress newTouch = new TouchPress();
-                    newTouch.startPosition = touch.position;
-                    newTouch.touch = touch;
-                    savedTouches.Add(newTouch);
+                    savedTouch.currentPosition = touch.position;
 
-                    // Événement de tap
-                    tap.Invoke((Vector3)touch.position);
-                }
-
-                if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-                {
-                    // Mise à jour des données pour les touchers en mouvement ou statiques
-                    foreach (var savedTouch in savedTouches)
-                    {
-                        if (touch.fingerId == savedTouch.touch.fingerId)
-                        {
-                            savedTouch.currentPosition = touch.position;
-
-                            // Événement de pression
-                            press.Invoke(savedTouch);
-                        }
-                    }
-                }
-
-                if (touch.phase == TouchPhase.Ended)
-                {
-                    TouchPress touchToRemove = new TouchPress();
-
-                    // Recherche et enlève le toucher qui a été retiré de l'écran
-                    foreach (var savedTouch in savedTouches)
-                    {
-                        if (touch.fingerId == savedTouch.touch.fingerId)
-                        {
-                            touchToRemove = savedTouch;
-
-                            // Événement pour le relâchement du doigt
-                            fingerUp.Invoke(savedTouch);
-                        }
-                    }
-
-                    savedTouches.Remove(touchToRemove); // Retire le toucher de la liste
+                    // Événement de pression
+                    press.Invoke(savedTouch);
                 }
             }
+        }
+    }
+
+    private void TouchEnd(Touch touch)
+    {
+        if (touch.phase == TouchPhase.Ended)
+        {
+            TouchPress touchToRemove = new TouchPress();
+
+            // Recherche et enlève le toucher qui a été retiré de l'écran
+            foreach (var savedTouch in savedTouches)
+            {
+                if (touch.fingerId == savedTouch.touch.fingerId)
+                {
+                    touchToRemove = savedTouch;
+
+                    // Événement pour le relâchement du doigt
+                    fingerUp.Invoke(savedTouch);
+                }
+            }
+
+            savedTouches.Remove(touchToRemove); // Retire le toucher de la liste
         }
     }
 }

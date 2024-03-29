@@ -43,53 +43,37 @@ public class RaycastManagerMobile : MonoBehaviour
         pointerEventData = new PointerEventData(eventSystem);
         InputManager.Instance.tap.AddListener((pos) =>
         {
-            RaycastHit(pos);
+            RaycastHitTap(pos);
         });
 
         InputManager.Instance.press.AddListener((touch) =>
         {
-            RaycastHit(touch.currentPosition);
+            RaycastHitHold(touch.currentPosition);
+        });
+        
+        InputManager.Instance.fingerUp.AddListener((touch) =>
+        {
+            RaycastHitEnd(touch.currentPosition);
         });
 
     }
 
     //----------------------------------------------------------------------------------------------------
 
-    private void RaycastHit(Vector3 pos)
+    private void RaycastHitTap(Vector3 pos)
     {
-        if (_currentScene == 0 && MenuUI(pos) == false)
-            Menu(pos);
-        else if (_currentScene == 1 && GameUI(pos) == false)
+        if (_currentScene == 0 && GameUI(pos) == false)
             Game(pos);
     }
-
-    private bool MenuUI(Vector3 pos)
+    private void RaycastHitHold(Vector3 pos)
     {
-        pointerEventData.position = pos;
-        List<RaycastResult> results = new List<RaycastResult>();
-        UIRaycaster.Raycast(pointerEventData, results);
-
-        if (results.Count > 0)
-        {
-            //Your UnityEvent
-            return true;
-        }
-
-        return false;
+        //if (_currentScene == 0 && GameUI(pos) == false)
+        //    Game(pos);
     }
-
-    private void Menu(Vector3 pos)
+    private void RaycastHitEnd(Vector3 pos)
     {
-        Ray ray = _camera.ScreenPointToRay(pos);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider.tag == "YourTag")
-            {
-                //Your UnityEvent
-            }
-        }
+        //if (_currentScene == 0 && GameUI(pos) == false)
+        //    Game(pos);
     }
 
     private bool GameUI(Vector3 pos)
@@ -110,15 +94,9 @@ public class RaycastManagerMobile : MonoBehaviour
     private void Game(Vector3 pos)
     {
         Ray ray = _camera.ScreenPointToRay(pos);
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.collider.tag == "YourTag")
-            {
-                //Your UnityEvent
-            }
-        }
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+        
+        hit.collider?.GetComponent<ICliquable>()?.Activate();
     }
-
 }
