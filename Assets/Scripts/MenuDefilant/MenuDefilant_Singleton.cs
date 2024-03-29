@@ -10,13 +10,15 @@ public class MenuDefilant_Singleton : MonoBehaviour
     [HideInInspector] public UnityEvent TryCloseEvent = new UnityEvent();
     [HideInInspector] public UnityEvent OnOpenEvent = new UnityEvent();
     [HideInInspector] public UnityEvent OnCloseEvent = new UnityEvent();
+    [HideInInspector] public UnityEvent<SubScene> SwitchSubSceneEvent = new UnityEvent<SubScene>();
 
     [SerializeField] private float closePosX, openPosX;
     [SerializeField] private SpriteRenderer cacheNoir;
+    [SerializeField] private List<Theme> themeList;
 
     private bool isNotInteractible, open;
     private float timeStateChange;
-
+    private SubScene currentSubScene;
     private static MenuDefilant_Singleton instance;
     public static MenuDefilant_Singleton Instance { get { return instance; } }
     private void Awake()
@@ -34,9 +36,17 @@ public class MenuDefilant_Singleton : MonoBehaviour
     {
         TryCloseEvent.AddListener(() => StartCoroutine(TryInteract(false)));
         TryOpenEvent.AddListener(() => StartCoroutine(TryInteract(true)));
+        SwitchSubSceneEvent.AddListener((subScene) => SwitchSubScene(subScene));
+
+        currentSubScene = themeList[0].allSubScene[0];
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private void SwitchSubScene(SubScene subScene)
+    {
+
+    }
 
     public IEnumerator TryInteract(bool stateWanted)
     {
