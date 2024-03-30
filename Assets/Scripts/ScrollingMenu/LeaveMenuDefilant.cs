@@ -14,15 +14,15 @@ public class LeaveMenuDefilant : MonoBehaviour, ICliquable
     {
         _collider = GetComponent<BoxCollider2D>();
         Close();
-        MenuDefilant_Singleton.Instance.OnCloseEvent.AddListener(() => Close());
-        MenuDefilant_Singleton.Instance.OnOpenEvent.AddListener(() => Open());
+        ScrollingMenu_Singleton.Instance.OnCloseEvent.AddListener(() => Close());
+        ScrollingMenu_Singleton.Instance.OnOpenEvent.AddListener(() => Open());
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public void Activate()
     {
-        MenuDefilant_Singleton.Instance.TryCloseEvent.Invoke();
+        ScrollingMenu_Singleton.Instance.TryCloseEvent.Invoke();
     }
 
     private void Close()

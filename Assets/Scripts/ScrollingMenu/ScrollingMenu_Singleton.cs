@@ -4,23 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MenuDefilant_Singleton : MonoBehaviour
+public class ScrollingMenu_Singleton : MonoBehaviour
 {
     [HideInInspector] public UnityEvent TryOpenEvent = new UnityEvent();
     [HideInInspector] public UnityEvent TryCloseEvent = new UnityEvent();
     [HideInInspector] public UnityEvent OnOpenEvent = new UnityEvent();
     [HideInInspector] public UnityEvent OnCloseEvent = new UnityEvent();
-    [HideInInspector] public UnityEvent<SubScene> SwitchSubSceneEvent = new UnityEvent<SubScene>();
+    [HideInInspector] public UnityEvent<SubScene> TrySwitchSubSceneEvent = new UnityEvent<SubScene>();
 
     [SerializeField] private float closePosX, openPosX;
     [SerializeField] private SpriteRenderer cacheNoir;
     [SerializeField] private List<Theme> themeList;
 
+
+    public float distSubSceneY, distSubSceneX, distTheme;
+
     private bool isNotInteractible, open;
     private float timeStateChange;
     private SubScene currentSubScene;
-    private static MenuDefilant_Singleton instance;
-    public static MenuDefilant_Singleton Instance { get { return instance; } }
+    private static ScrollingMenu_Singleton instance;
+    public static ScrollingMenu_Singleton Instance { get { return instance; } }
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -36,7 +39,7 @@ public class MenuDefilant_Singleton : MonoBehaviour
     {
         TryCloseEvent.AddListener(() => StartCoroutine(TryInteract(false)));
         TryOpenEvent.AddListener(() => StartCoroutine(TryInteract(true)));
-        SwitchSubSceneEvent.AddListener((subScene) => SwitchSubScene(subScene));
+        TrySwitchSubSceneEvent.AddListener((subScene) => SwitchSubScene(subScene));
 
         currentSubScene = themeList[0].allSubScene[0];
     }
