@@ -53,6 +53,7 @@ public class ScrollingMenu_Singleton : MonoBehaviour
 
     private void InstantiateAllTheme()
     {
+        //Make spawn theme
         float maxLenght = 0f;
         int weight = 0;
         for (int i = 0; i < themeList.Count; i++)
@@ -65,6 +66,7 @@ public class ScrollingMenu_Singleton : MonoBehaviour
             weight+= themeList[i].allSubScene.Count;
         }
 
+        //Resize
         maxLenght += themeList[themeList.Count - 1].allSubScene.Count * distSubSceneY / 5f;
 
         if(maxLenght < -4f)
@@ -76,8 +78,8 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         }
         else
             slider.minY = 0f;
-        //background.transform.localScale =
-        //slider = weight
+        
+        themeList.Clear();
     }
 
     private void SwitchSubScene(SubScene subScene)
