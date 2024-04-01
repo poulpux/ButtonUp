@@ -37,6 +37,7 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         }
         else
             instance = this;
+        Application.targetFrameRate = 100;
     }
 
     void Start()
