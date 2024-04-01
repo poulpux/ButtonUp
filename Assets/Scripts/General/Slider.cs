@@ -13,7 +13,10 @@ public class Slider : MonoBehaviour
 
     private void Update()
     {
-        intertie = Mathf.Lerp(intertie, 0, -Mathf.Abs(intertie)/2f);
+        print(intertie);
+        timer += Time.deltaTime;
+        float t = Mathf.Clamp01(timer / 20f);
+        intertie = Mathf.Lerp(intertie, 0, t);
 
         //Calculate futurPos
         Vector3 futurPos = ObjectToMove.transform.position - intertie * Vector3.up * Time.deltaTime * sliderSensi;
@@ -22,6 +25,7 @@ public class Slider : MonoBehaviour
     public void TryToSlide(Vector3 deltaPos)
     {
         intertie = deltaPos.y;
+        timer = 0f;
     }
 
     private Vector3 ReturnWithYChange(float y)
