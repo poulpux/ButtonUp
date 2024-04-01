@@ -318,7 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minY: 20
   maxY: 0
-  sliderSensi: 1
+  sliderSensi: 0.35
   ObjectToMove: {fileID: 1714514591}
 --- !u!61 &323770136
 BoxCollider2D:

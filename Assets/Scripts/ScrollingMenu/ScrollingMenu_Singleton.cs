@@ -22,6 +22,7 @@ public class ScrollingMenu_Singleton : MonoBehaviour
 
     public float distSubSceneY, distSubSceneX, distTheme;
 
+    private AnimatingCurve curve = new AnimatingCurve(0f,0f, 0.2f, GRAPH.EASESIN, INANDOUT.IN, LOOP.CLAMP) ;
     private bool isNotInteractible, open;
     private float timeStateChange;
     private SubScene currentSubScene;
@@ -73,7 +74,7 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         {
             InitCoroutine();
 
-            while (timeStateChange <= 0.18f)
+            while (!Tools.isCurveFinish(curve))
             {
                 Transition();
                 yield return new WaitForEndOfFrame();
@@ -88,6 +89,10 @@ public class ScrollingMenu_Singleton : MonoBehaviour
     {
         isNotInteractible = true;
         timeStateChange = 0f;
+        curve.timeSinceBegin = 0;
+        curve.beginValueF = transform.position.x;
+        curve.endValueF = !open ? openPosX : closePosX;
+
     }
 
     private void EndCoroutine()
@@ -105,9 +110,10 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         timeStateChange += Time.deltaTime;
 
         float t = Mathf.Clamp01(timeStateChange / 0.18f);
-        float lerpedValue = Mathf.Lerp(!open? closePosX : openPosX, !open ? openPosX : closePosX, t);
+        float lerpedValue = transform.position.x;
+        Tools.PlayCurve(ref curve,ref lerpedValue);
         transform.position = new Vector3(lerpedValue, transform.position.y, transform.position.z);
-        cacheNoir.material.color = new Color(cacheNoir.material.color.r, cacheNoir.material.color.g, cacheNoir.material.color.b,!open ? t * 0.8f : 0.8f- t * 0.8f);
+        cacheNoir.material.color = new Color(cacheNoir.material.color.r, cacheNoir.material.color.g, cacheNoir.material.color.b,!open ? curve.timeSinceBegin / curve.duration * 0.8f : 0.8f- curve.timeSinceBegin / curve.duration * 0.8f);
     }
 
     private void RezizeScrollingMenu(ref float maxLenght)
