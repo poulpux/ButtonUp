@@ -15,6 +15,7 @@ public class ScrollingMenu_Singleton : MonoBehaviour
     [SerializeField] private float closePosX, openPosX;
     [SerializeField] private SpriteRenderer cacheNoir;
     [SerializeField] private List<Theme> themeList;
+    [SerializeField] private Vector3 offSet;
 
 
     public float distSubSceneY, distSubSceneX, distTheme;
@@ -42,9 +43,25 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         TrySwitchSubSceneEvent.AddListener((subScene) => SwitchSubScene(subScene));
 
         currentSubScene = themeList[0].allSubScene[0];
+
+        InstantiateAllTheme();
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    private void InstantiateAllTheme()
+    {
+        int weight = 0;
+        for (int i = 0; i < themeList.Count; i++)
+        {
+            Vector3 distTheme = Vector3.up * i * this.distTheme;
+            Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
+            print(distSubScene);
+            GameObject theme = Instantiate(themeList[i].gameObject, transform);
+            theme.transform.localPosition = distTheme + distSubScene + offSet;
+            weight+= themeList[i].allSubScene.Count;
+        }
+    }
 
     private void SwitchSubScene(SubScene subScene)
     {

@@ -22,7 +22,7 @@ public class SubScene : MonoBehaviour, ICliquable
 
         text.text = nameSubScene;
         GameObject icon = Instantiate(icone, transform);
-        icon.transform.position = new Vector3(-2.4f, 0.36f, 0f);
+        icon.transform.localPosition = new Vector3(-12.15f, 1.8f, 0f);
         icon.transform.localScale = Vector3.one* 5f;
     }
 
