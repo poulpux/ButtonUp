@@ -53,17 +53,30 @@ public class ScrollingMenu_Singleton : MonoBehaviour
 
     private void InstantiateAllTheme()
     {
+        float maxLenght = 0f;
         int weight = 0;
         for (int i = 0; i < themeList.Count; i++)
         {
             Vector3 distTheme = Vector3.up * i * this.distTheme;
             Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
-            GameObject theme = Instantiate(themeList[i].gameObject, /*background.*/transform);
+            GameObject theme = Instantiate(themeList[i].gameObject, transform);
             theme.transform.localPosition = distTheme + distSubScene + offSet;
-            //theme.transform.localScale = new Vector3(theme.transform.localScale.x/ background.transform.localScale.x, theme.transform.localScale.y / background.transform.localScale.y, theme.transform.localScale.z / background.transform.localScale.z);
+            maxLenght = theme.transform.localPosition.y;
             weight+= themeList[i].allSubScene.Count;
         }
 
+        maxLenght += themeList[themeList.Count - 1].allSubScene.Count * distSubSceneY / 5f;
+        print(maxLenght);
+        if(maxLenght < -4f)
+        {
+            float diff = -maxLenght + 4f;
+            background.transform.localScale = new Vector3(background.transform.localScale.x, background.transform.localScale.y + diff, background.transform.localScale.z);
+            background.transform.localPosition -= Vector3.up * diff / 2f;
+            slider.minY = diff / 5f;
+        }
+        else
+            slider.minY = 0f;
+        //background.transform.localScale =
         //slider = weight
     }
 
