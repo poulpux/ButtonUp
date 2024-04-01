@@ -90,7 +90,7 @@ public class InputManager : MonoBehaviour
                     savedTouch.currentPosition = touch.position;
                     savedTouch.deltaPosition = savedTouch.lastPosition - savedTouch.currentPosition;
                     savedTouch.timer += Time.deltaTime;
-                    if (savedTouch.timer > 1.5f)
+                    if (savedTouch.timer > 1f)
                         savedTouch.quickTouch = false;
                     // Événement de pression
                     press.Invoke(savedTouch);
