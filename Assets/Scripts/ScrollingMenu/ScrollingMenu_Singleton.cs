@@ -16,6 +16,8 @@ public class ScrollingMenu_Singleton : MonoBehaviour
     [SerializeField] private SpriteRenderer cacheNoir;
     [SerializeField] private List<Theme> themeList;
     [SerializeField] private Vector3 offSet;
+    [SerializeField] private Slider slider;
+    [SerializeField] private GameObject background;
 
 
     public float distSubSceneY, distSubSceneX, distTheme;
@@ -56,11 +58,13 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         {
             Vector3 distTheme = Vector3.up * i * this.distTheme;
             Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
-            print(distSubScene);
-            GameObject theme = Instantiate(themeList[i].gameObject, transform);
+            GameObject theme = Instantiate(themeList[i].gameObject, /*background.*/transform);
             theme.transform.localPosition = distTheme + distSubScene + offSet;
+            //theme.transform.localScale = new Vector3(theme.transform.localScale.x/ background.transform.localScale.x, theme.transform.localScale.y / background.transform.localScale.y, theme.transform.localScale.z / background.transform.localScale.z);
             weight+= themeList[i].allSubScene.Count;
         }
+
+        //slider = weight
     }
 
     private void SwitchSubScene(SubScene subScene)
