@@ -318,7 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minY: 20
   maxY: 0
-  sliderSensi: 1
+  sliderSensi: 0.35
   ObjectToMove: {fileID: 1714514591}
 --- !u!61 &323770136
 BoxCollider2D:
@@ -685,7 +685,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.96, y: 0}
+  m_Offset: {x: 1.96, y: -22.70926}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -695,7 +695,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.84, y: 11.95}
+  m_Size: {x: 1.8400002, y: 57.36852}
   m_EdgeRadius: 0
 --- !u!114 &773897205
 MonoBehaviour:
@@ -1199,6 +1199,15 @@ MonoBehaviour:
   openPosX: 0
   cacheNoir: {fileID: 677149702}
   themeList:
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
+  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
   - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
   - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
   offSet: {x: 0, y: 2.5, z: 0}
