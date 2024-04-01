@@ -66,13 +66,13 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         }
 
         maxLenght += themeList[themeList.Count - 1].allSubScene.Count * distSubSceneY / 5f;
-        print(maxLenght);
+
         if(maxLenght < -4f)
         {
-            float diff = -maxLenght + 4f;
+            float diff = -maxLenght - 4f;
             background.transform.localScale = new Vector3(background.transform.localScale.x, background.transform.localScale.y + diff, background.transform.localScale.z);
             background.transform.localPosition -= Vector3.up * diff / 2f;
-            slider.minY = diff / 5f;
+            slider.minY = diff;
         }
         else
             slider.minY = 0f;

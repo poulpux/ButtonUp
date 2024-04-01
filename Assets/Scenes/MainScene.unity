@@ -318,6 +318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minY: 20
   maxY: 0
+  sliderSensi: 1
   ObjectToMove: {fileID: 1714514591}
 --- !u!61 &323770136
 BoxCollider2D:
@@ -1198,8 +1199,6 @@ MonoBehaviour:
   openPosX: 0
   cacheNoir: {fileID: 677149702}
   themeList:
-  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
-  - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
   - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
   - {fileID: 5902852084214495796, guid: bf2094a059071474f887e59633b08e28, type: 3}
   offSet: {x: 0, y: 2.5, z: 0}

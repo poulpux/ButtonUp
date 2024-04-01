@@ -63,8 +63,8 @@ public class RaycastManagerMobile : MonoBehaviour
 
     private void RaycastHitTap(Vector3 pos)
     {
-        if (_currentScene == 0 && GameUI(pos) == false)
-            Game(pos);
+        //if (_currentScene == 0 && GameUI(pos) == false)
+        //    Game(pos);
     }
     private void RaycastHitHold(Vector3 pos, Vector3 deltaPos)
     {
@@ -72,8 +72,8 @@ public class RaycastManagerMobile : MonoBehaviour
     }
     private void RaycastHitEnd(Vector3 pos)
     {
-        //if (_currentScene == 0 && GameUI(pos) == false)
-        //    Game(pos);
+        if (_currentScene == 0 && GameUI(pos) == false)
+            Game(pos);
     }
 
     private bool GameUI(Vector3 pos)

@@ -11,6 +11,8 @@ public class TouchPress
     public Vector3 currentPosition; // La position actuelle du toucher
     public Vector3 lastPosition; // La position actuelle du toucher
     public Vector3 deltaPosition;
+    public bool quickTouch;
+    public float timer;
 }
 
 public class InputManager : MonoBehaviour
@@ -67,6 +69,7 @@ public class InputManager : MonoBehaviour
             newTouch.startPosition = touch.position;
             newTouch.touch = touch;
             newTouch.currentPosition = touch.position;
+            newTouch.quickTouch = true;
             savedTouches.Add(newTouch);
 
             // Événement de tap
@@ -86,6 +89,9 @@ public class InputManager : MonoBehaviour
                     savedTouch.lastPosition = savedTouch.currentPosition;
                     savedTouch.currentPosition = touch.position;
                     savedTouch.deltaPosition = savedTouch.lastPosition - savedTouch.currentPosition;
+                    savedTouch.timer += Time.deltaTime;
+                    if (savedTouch.timer > 1.5f)
+                        savedTouch.quickTouch = false;
                     // Événement de pression
                     press.Invoke(savedTouch);
                 }
@@ -107,7 +113,8 @@ public class InputManager : MonoBehaviour
                     touchToRemove = savedTouch;
 
                     // Événement pour le relâchement du doigt
-                    fingerUp.Invoke(savedTouch);
+                    if(savedTouch.quickTouch == true)
+                        fingerUp.Invoke(savedTouch);
                 }
             }
 

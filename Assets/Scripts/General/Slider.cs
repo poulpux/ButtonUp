@@ -6,10 +6,11 @@ using UnityEngine;
 public class Slider : MonoBehaviour
 {
     public float minY = 20f, maxY = 0f;
+    [SerializeField] private float sliderSensi = 1f;
     [SerializeField] private GameObject ObjectToMove;
     public void TryToSlide(Vector3 deltaPos)
     {
-        Vector3 futurPos = ObjectToMove.transform.position - deltaPos.y * Vector3.up * Time.deltaTime;
+        Vector3 futurPos = ObjectToMove.transform.position - deltaPos.y * Vector3.up * Time.deltaTime * sliderSensi;
         ObjectToMove.transform.position = futurPos.y > minY ? ReturnWithYChange(minY) : futurPos.y < maxY ? ReturnWithYChange(maxY) : futurPos;
     }
 
