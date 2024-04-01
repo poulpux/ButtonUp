@@ -13,7 +13,6 @@ public class Slider : MonoBehaviour
 
     private void Update()
     {
-        print(intertie);
         timer += Time.deltaTime;
         float t = Mathf.Clamp01(timer / 20f);
         intertie = Mathf.Lerp(intertie, 0, t);
