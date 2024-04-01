@@ -7,15 +7,10 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
-
 public class RaycastManagerMobile : MonoBehaviour
 {
     [SerializeField]
     private Camera _camera;
-
-    //Events
-
 
     [SerializeField]
     private GraphicRaycaster UIRaycaster;

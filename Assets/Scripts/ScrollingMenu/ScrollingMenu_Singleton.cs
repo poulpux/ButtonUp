@@ -53,31 +53,9 @@ public class ScrollingMenu_Singleton : MonoBehaviour
 
     private void InstantiateAllTheme()
     {
-        //Make spawn theme
         float maxLenght = 0f;
-        int weight = 0;
-        for (int i = 0; i < themeList.Count; i++)
-        {
-            Vector3 distTheme = Vector3.up * i * this.distTheme;
-            Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
-            GameObject theme = Instantiate(themeList[i].gameObject, transform);
-            theme.transform.localPosition = distTheme + distSubScene + offSet;
-            maxLenght = theme.transform.localPosition.y;
-            weight+= themeList[i].allSubScene.Count;
-        }
-
-        //Resize
-        maxLenght += themeList[themeList.Count - 1].allSubScene.Count * distSubSceneY / 5f;
-
-        if(maxLenght < -4f)
-        {
-            float diff = -maxLenght - 4f;
-            background.transform.localScale = new Vector3(background.transform.localScale.x, background.transform.localScale.y + diff, background.transform.localScale.z);
-            background.transform.localPosition -= Vector3.up * diff / 2f;
-            slider.minY = diff;
-        }
-        else
-            slider.minY = 0f;
+        SpawnTheme(ref maxLenght);
+        RezizeScrollingMenu(ref maxLenght);
         
         themeList.Clear();
     }
@@ -98,7 +76,7 @@ public class ScrollingMenu_Singleton : MonoBehaviour
             while (timeStateChange <= 0.18f)
             {
                 Transition();
-                yield return null;
+                yield return new WaitForEndOfFrame();
             }
 
             EndCoroutine();
@@ -130,5 +108,34 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         float lerpedValue = Mathf.Lerp(!open? closePosX : openPosX, !open ? openPosX : closePosX, t);
         transform.position = new Vector3(lerpedValue, transform.position.y, transform.position.z);
         cacheNoir.material.color = new Color(cacheNoir.material.color.r, cacheNoir.material.color.g, cacheNoir.material.color.b,!open ? t * 0.8f : 0.8f- t * 0.8f);
+    }
+
+    private void RezizeScrollingMenu(ref float maxLenght)
+    {
+        maxLenght += themeList[themeList.Count - 1].allSubScene.Count * distSubSceneY / 5f;
+
+        if (maxLenght < -4f)
+        {
+            float diff = -maxLenght - 4f;
+            background.transform.localScale = new Vector3(background.transform.localScale.x, background.transform.localScale.y + diff, background.transform.localScale.z);
+            background.transform.localPosition -= Vector3.up * diff / 2f;
+            slider.minY = diff;
+        }
+        else
+            slider.minY = 0f;
+    }
+
+    private void SpawnTheme(ref float maxLenght)
+    {
+        int weight = 0;
+        for (int i = 0; i < themeList.Count; i++)
+        {
+            Vector3 distTheme = Vector3.up * i * this.distTheme;
+            Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
+            GameObject theme = Instantiate(themeList[i].gameObject, transform);
+            theme.transform.localPosition = distTheme + distSubScene + offSet;
+            maxLenght = theme.transform.localPosition.y;
+            weight += themeList[i].allSubScene.Count;
+        }
     }
 }
