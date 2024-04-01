@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3302317297144006886}
   - component: {fileID: 6067582542522297652}
   - component: {fileID: 4629691849473718892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SubSceneButtonUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
