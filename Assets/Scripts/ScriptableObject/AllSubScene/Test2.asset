@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test2
   m_EditorClassIdentifier: 
   namee: Test2
-  icon: {fileID: 1671013783624642, guid: 7ef9252f758d3d44ebe6212ecb125d3a, type: 3}
+  icon: {fileID: 3683871870174519238, guid: 318231f288511af439a220c91439306f, type: 3}
   content: {fileID: 0}
   scrollLimit: {fileID: 0}
   parent: {fileID: 0}
