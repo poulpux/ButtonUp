@@ -77,45 +77,6 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public IEnumerator TryInteract(bool stateWanted)
-    {
-        if (isNotInteractible || open == stateWanted)
-            yield break;
-        else
-        {
-            InitCoroutine();
-
-            while (!Tools.isCurveFinish(curve))
-            {
-                Transition();
-                yield return new WaitForEndOfFrame();
-            }
-
-            EndCoroutine();
-            yield break;
-        }
-    }
-
-    private void InitCoroutine()
-    {
-        isNotInteractible = true;
-        timeStateChange = 0f;
-        curve.timeSinceBegin = 0;
-        curve.beginValueF = transform.position.x;
-        curve.endValueF = !open ? openPosX : closePosX;
-
-    }
-
-    private void EndCoroutine()
-    {
-        isNotInteractible = false;
-        open = !open;
-        if (open)
-            OnOpenEvent.Invoke();
-        else
-            OnCloseEvent.Invoke();
-    }
-
     private void Transition()
     {
         timeStateChange += Time.deltaTime;
@@ -155,4 +116,52 @@ public class MenuManager : MonoBehaviour
             weight += themeList[i].GetCountAllSubScene();
         }
     }
+
+
+    //====================================================
+    //==========================
+    //===========
+
+    public IEnumerator TryInteract(bool stateWanted)
+    {
+        if (isNotInteractible || open == stateWanted)
+            yield break;
+        else
+        {
+            InitCoroutine();
+
+            while (!Tools.isCurveFinish(curve))
+            {
+                Transition();
+                yield return new WaitForEndOfFrame();
+            }
+
+            EndCoroutine();
+            yield break;
+        }
+    }
+
+    private void InitCoroutine()
+    {
+        isNotInteractible = true;
+        timeStateChange = 0f;
+        curve.timeSinceBegin = 0;
+        curve.beginValueF = transform.position.x;
+        curve.endValueF = !open ? openPosX : closePosX;
+
+    }
+
+    private void EndCoroutine()
+    {
+        isNotInteractible = false;
+        open = !open;
+        if (open)
+            OnOpenEvent.Invoke();
+        else
+            OnCloseEvent.Invoke();
+    }
+
+    //===========
+    //==========================
+    //====================================================
 }
