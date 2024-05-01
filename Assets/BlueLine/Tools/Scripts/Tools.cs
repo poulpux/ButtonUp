@@ -125,20 +125,20 @@ public partial class Tools : MonoBehaviour
     /// </summary>
     /// <param name="curve"></param>
     /// <param name="valueToModify"></param>
-    public static void PlayCurve(ref AnimatingCurve curve,ref Vector3 valueToModify)
+    public static void PlayCurve(ref AnimatingCurve curve, ref Vector3 valueToModify)
     {
         curve.timeSinceBegin += Time.deltaTime * curve.reverse;
         if (curve.animCurv == null)
         {
 
-            if(isCurveFinish(curve) == true)
+            if (isCurveFinish(curve) == true)
                 LoopGestion(ref curve, ref valueToModify);
             else
                 DrawCurve(curve, ref valueToModify);
         }
         else
         {
-            valueToModify =curve.endValue* curve.animCurv.Evaluate(curve.timeSinceBegin);
+            valueToModify = curve.endValue * curve.animCurv.Evaluate(curve.timeSinceBegin);
         }
     }
 
@@ -160,7 +160,7 @@ public partial class Tools : MonoBehaviour
 
     public static bool isCurveFinish(AnimatingCurve curve)
     {
-        if ((curve.timeSinceBegin - Time.deltaTime * curve.reverse < curve.duration && curve.reverse == 1f)|| (curve.timeSinceBegin + Time.deltaTime * curve.reverse > 0f && curve.reverse == -1f))
+        if ((curve.timeSinceBegin - Time.deltaTime * curve.reverse < curve.duration && curve.reverse == 1f) || (curve.timeSinceBegin + Time.deltaTime * curve.reverse > 0f && curve.reverse == -1f))
             return false;
         return true;
     }

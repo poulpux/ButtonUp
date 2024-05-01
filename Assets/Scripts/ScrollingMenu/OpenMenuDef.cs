@@ -16,6 +16,6 @@ public class OpenMenuDef : MonoBehaviour, ICliquable
 
     public void Activate()
     {
-        ScrollingMenu_Singleton.Instance.TryOpenEvent.Invoke();
+        MenuManager.Instance.TryOpenEvent.Invoke();
     }
 }

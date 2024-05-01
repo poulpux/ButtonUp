@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6067582542522297652}
   - component: {fileID: 4629691849473718892}
   m_Layer: 8
-  m_Name: SubSceneButtonUp
+  m_Name: SubScenePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,8 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caae56a41b6522d4abf714b9661bc774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icone: {fileID: 1671013783624642, guid: 7ef9252f758d3d44ebe6212ecb125d3a, type: 3}
-  nameSubScene: ButtonUp
+  text: {fileID: 0}
 --- !u!114 &3302317297144006886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,7 +82,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 0.05882353, g: 0.05882353, b: 0.05882353, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -225,7 +224,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -7.484873, y: 1.8663032}
+  m_Offset: {x: -3.9455867, y: 1.8393073}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -235,5 +234,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5.892563, y: 1.7590394}
+  m_Size: {x: 14.173753, y: 2.1658359}
   m_EdgeRadius: 0
