@@ -18,6 +18,8 @@ public class Theme : MonoBehaviour
         GenerateTheme();
     }
 
+    //1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+
     private void SetText()
     {
         text = GetComponent<TextMeshPro>();
@@ -34,15 +36,13 @@ public class Theme : MonoBehaviour
         }
     }
 
-    public SubSceneScriptableObject GetFirstElement()
-    {
-        return allSubScene[0];
-    }
+    public SubSceneScriptableObject GetFirstElement() =>
+         allSubScene[0];
 
-    public int GetCountAllSubScene()
-    {
-        return allSubScene.Count;
-    }
+    public int GetCountAllSubScene() =>
+        allSubScene.Count;
+
+    //2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
 
     private GameObject GenerateSubSceneObj(int i)
     {

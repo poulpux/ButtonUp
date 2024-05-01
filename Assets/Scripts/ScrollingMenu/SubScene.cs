@@ -24,8 +24,6 @@ public class SubScene : MonoBehaviour, ICliquable
         MenuManager.Instance.TrySwitchSubSceneEvent.Invoke(subSceneSO);
     }
 
-    public void SetSO(SubSceneScriptableObject SO)
-    {
+    public void SetSO(SubSceneScriptableObject SO) =>
         subSceneSO = SO;
-    }
 }
