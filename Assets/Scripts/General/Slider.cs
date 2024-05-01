@@ -6,7 +6,7 @@ using UnityEngine;
 public class Slider : MonoBehaviour
 {
     public float minY = 20f, maxY = 0f;
-    [SerializeField] private float sliderSensi = 1f;
+    [SerializeField] private float sliderSensi = 0.35f, intertiaDuration;
     [SerializeField] private GameObject ObjectToMove;
     private float intertie;
     float timer;
@@ -32,10 +32,11 @@ public class Slider : MonoBehaviour
         PlayMovement(deltaPos.y);
     }
 
-    private void PlayMovement(float deltaPos)
+    private bool PlayMovement(float deltaPos)
     {
         Vector3 futurPos = ObjectToMove.transform.position - deltaPos * Vector3.up * Time.deltaTime * sliderSensi;
         ObjectToMove.transform.position = futurPos.y > minY ? ReturnWithYChange(minY) : futurPos.y < maxY ? ReturnWithYChange(maxY) : futurPos;
+        return futurPos.y > minY || futurPos.y < maxY;
     }
 
     private Vector3 ReturnWithYChange(float y)
@@ -46,11 +47,16 @@ public class Slider : MonoBehaviour
     private IEnumerator PlayInertia(float deltaPos)
     {
         float inertia = deltaPos;
-        while (inertia > 0f)
+        bool positive = inertia > 0;
+        while ((inertia > 0f && positive) || (inertia < 0f && !positive))
         {
-            inertia -= Time.deltaTime;
-            PlayMovement(inertia);
-            yield return null;
+            print(inertia);
+            inertia -= positive ? 1f : -1f * Time.fixedDeltaTime * 1f/intertiaDuration;
+            if (PlayMovement(inertia))
+                yield break;
+            else
+                yield return null;
         }
+        yield break;
     }
 }

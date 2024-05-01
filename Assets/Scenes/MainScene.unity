@@ -319,6 +319,7 @@ MonoBehaviour:
   minY: 20
   maxY: 0
   sliderSensi: 0.35
+  intertiaDuration: 0.5
   ObjectToMove: {fileID: 1714514591}
 --- !u!61 &323770136
 BoxCollider2D:
