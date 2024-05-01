@@ -49,7 +49,7 @@ public class RaycastManagerMobile : MonoBehaviour
         
         InputManager.Instance.fingerUp.AddListener((touch) =>
         {
-            RaycastHitEnd(touch.currentPosition);
+            RaycastHitEnd(touch.currentPosition, touch.deltaPosition);
         });
 
     }
@@ -65,9 +65,9 @@ public class RaycastManagerMobile : MonoBehaviour
     {
          GameSlide(pos, deltaPos);
     }
-    private void RaycastHitEnd(Vector3 pos)
+    private void RaycastHitEnd(Vector3 pos, Vector3 deltaPos)
     {
-         GameEndTouch(pos);
+         GameEndTouch(pos, deltaPos);
     }
 
     private bool GameUI(Vector3 pos)
@@ -88,38 +88,37 @@ public class RaycastManagerMobile : MonoBehaviour
     private void Game(Vector3 pos)
     {
         RaycastHit2D hit = shootRaycast2DTouch(pos);
-
-        hit.collider?.GetComponent<ICliquable>()?.Activate();
     }
 
     private void GameSlide(Vector3 pos, Vector3 deltaPos)
     {
         RaycastHit2D hit = shootRaycast2DHold(pos);
 
-        hit.collider?.GetComponent<Slider>().TryToSlide(deltaPos);
+        hit.collider?.GetComponent<Slider>()?.MoveSlider(deltaPos);
     }
     
-    private void GameEndTouch(Vector3 pos)
+    private void GameEndTouch(Vector3 pos, Vector3 deltaPos)
     {
         RaycastHit2D hit = shootRaycast2DEndTouch(pos);
 
+        hit.collider?.GetComponent<Slider>()?.EndedPress(deltaPos);
         hit.collider?.GetComponent<ICliquable>()?.Activate();
     }
 
     private RaycastHit2D shootRaycast2DTouch(Vector3 pos)
     {
         Ray ray = _camera.ScreenPointToRay(pos);
-        return Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, (1 << LayerMask.NameToLayer("Touch")));
+        return Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, (1 << LayerMask.NameToLayer("Interactible")));
     }
     
     private RaycastHit2D shootRaycast2DHold(Vector3 pos)
     {
         Ray ray = _camera.ScreenPointToRay(pos);
-        return Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, (1 << LayerMask.NameToLayer("Hold")));
+        return Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, (1 << LayerMask.NameToLayer("Interactible")));
     }
     private RaycastHit2D shootRaycast2DEndTouch(Vector3 pos)
     {
         Ray ray = _camera.ScreenPointToRay(pos);
-        return Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, (1 << LayerMask.NameToLayer("EndTouch")));
+        return Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, (1 << LayerMask.NameToLayer("Interactible")));
     }
 }
