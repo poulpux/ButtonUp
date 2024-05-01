@@ -1250,6 +1250,7 @@ MonoBehaviour:
   openPosX: 0
   offSet: {x: 0, y: 2.5, z: 0}
   distSubSceneY: -2.5
+  distResizeY: -0.5
   distSubSceneX: 3
   distTheme: -1
   localPosIcon: {x: -11.9, y: 2, z: 0}

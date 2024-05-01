@@ -21,7 +21,7 @@ public class MenuManager : MonoBehaviour
 
     [SerializeField] private float closePosX, openPosX;
     [SerializeField] private Vector3 offSet;
-    public float distSubSceneY, distSubSceneX, distTheme;
+    public float distSubSceneY, distResizeY, distSubSceneX, distTheme;
     public Vector3 localPosIcon;
 
     [Header("======Visuel======")]
@@ -90,7 +90,7 @@ public class MenuManager : MonoBehaviour
 
     private void RezizeScrollingMenu(ref float maxLenght)
     {
-        maxLenght += themeList[themeList.Count - 1].GetCountAllSubScene() * distSubSceneY / 5f;
+        maxLenght += themeList[themeList.Count - 1].GetCountAllSubScene() * distResizeY;
 
         if (maxLenght < -4f)
         {
@@ -109,7 +109,7 @@ public class MenuManager : MonoBehaviour
         for (int i = 0; i < themeList.Count; i++)
         {
             Vector3 distTheme = Vector3.up * i * this.distTheme;
-            Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
+            Vector3 distSubScene = weight * distResizeY * Vector3.up; 
             GameObject theme = Instantiate(themeList[i].gameObject, transform);
             theme.transform.localPosition = distTheme + distSubScene + offSet;
             maxLenght = theme.transform.localPosition.y;
