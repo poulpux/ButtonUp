@@ -44,109 +44,109 @@ public class MenuManager : MonoBehaviour
             instance = this;
     }
 
-    //void Start()
-    //{
-    //    TryCloseEvent.AddListener(() => StartCoroutine(TryInteract(false)));
-    //    TryOpenEvent.AddListener(() => StartCoroutine(TryInteract(true)));
-    //    TrySwitchSubSceneEvent.AddListener((subScene) => SwitchSubScene(subScene));
+    void Start()
+    {
+        TryCloseEvent.AddListener(() => StartCoroutine(TryInteract(false)));
+        TryOpenEvent.AddListener(() => StartCoroutine(TryInteract(true)));
+        TrySwitchSubSceneEvent.AddListener((subScene) => SwitchSubScene(subScene));
 
-    //    currentSubScene = themeList[0].GetFirstElement();
+        currentSubScene = themeList[0].GetFirstElement();
 
-    //    InstantiateAllTheme();
-    //}
+        InstantiateAllTheme();
+    }
 
-    ////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    //private void InstantiateAllTheme()
-    //{
-    //    float maxLenght = 0f;
-    //    SpawnTheme(ref maxLenght);
-    //    RezizeScrollingMenu(ref maxLenght);
+    private void InstantiateAllTheme()
+    {
+        float maxLenght = 0f;
+        SpawnTheme(ref maxLenght);
+        RezizeScrollingMenu(ref maxLenght);
 
-    //    themeList.Clear();
-    //}
+        themeList.Clear();
+    }
 
-    //private void SwitchSubScene(SubScene subScene)
-    //{
+    private void SwitchSubScene(SubScene subScene)
+    {
 
-    //}
+    }
 
-    //public IEnumerator TryInteract(bool stateWanted)
-    //{
-    //    if (isNotInteractible || open == stateWanted)
-    //        yield break;
-    //    else
-    //    {
-    //        InitCoroutine();
+    public IEnumerator TryInteract(bool stateWanted)
+    {
+        if (isNotInteractible || open == stateWanted)
+            yield break;
+        else
+        {
+            InitCoroutine();
 
-    //        while (!Tools.isCurveFinish(curve))
-    //        {
-    //            Transition();
-    //            yield return new WaitForEndOfFrame();
-    //        }
+            while (!Tools.isCurveFinish(curve))
+            {
+                Transition();
+                yield return new WaitForEndOfFrame();
+            }
 
-    //        EndCoroutine();
-    //        yield break;
-    //    }
-    //}
+            EndCoroutine();
+            yield break;
+        }
+    }
 
-    //private void InitCoroutine()
-    //{
-    //    isNotInteractible = true;
-    //    timeStateChange = 0f;
-    //    curve.timeSinceBegin = 0;
-    //    curve.beginValueF = transform.position.x;
-    //    curve.endValueF = !open ? openPosX : closePosX;
+    private void InitCoroutine()
+    {
+        isNotInteractible = true;
+        timeStateChange = 0f;
+        curve.timeSinceBegin = 0;
+        curve.beginValueF = transform.position.x;
+        curve.endValueF = !open ? openPosX : closePosX;
 
-    //}
+    }
 
-    //private void EndCoroutine()
-    //{
-    //    isNotInteractible = false;
-    //    open = !open;
-    //    if (open)
-    //        OnOpenEvent.Invoke();
-    //    else
-    //        OnCloseEvent.Invoke();
-    //}
+    private void EndCoroutine()
+    {
+        isNotInteractible = false;
+        open = !open;
+        if (open)
+            OnOpenEvent.Invoke();
+        else
+            OnCloseEvent.Invoke();
+    }
 
-    //private void Transition()
-    //{
-    //    timeStateChange += Time.deltaTime;
+    private void Transition()
+    {
+        timeStateChange += Time.deltaTime;
 
-    //    float t = Mathf.Clamp01(timeStateChange / 0.18f);
-    //    float lerpedValue = transform.position.x;
-    //    Tools.PlayCurve(ref curve, ref lerpedValue);
-    //    transform.position = new Vector3(lerpedValue, transform.position.y, transform.position.z);
-    //    cacheNoir.material.color = new Color(cacheNoir.material.color.r, cacheNoir.material.color.g, cacheNoir.material.color.b, !open ? curve.timeSinceBegin / curve.duration * 0.8f : 0.8f - curve.timeSinceBegin / curve.duration * 0.8f);
-    //}
+        float t = Mathf.Clamp01(timeStateChange / 0.18f);
+        float lerpedValue = transform.position.x;
+        Tools.PlayCurve(ref curve, ref lerpedValue);
+        transform.position = new Vector3(lerpedValue, transform.position.y, transform.position.z);
+        cacheNoir.material.color = new Color(cacheNoir.material.color.r, cacheNoir.material.color.g, cacheNoir.material.color.b, !open ? curve.timeSinceBegin / curve.duration * 0.8f : 0.8f - curve.timeSinceBegin / curve.duration * 0.8f);
+    }
 
-    //private void RezizeScrollingMenu(ref float maxLenght)
-    //{
-    //    maxLenght += themeList[themeList.Count - 1].GetCountAllSubScene() * distSubSceneY / 5f;
+    private void RezizeScrollingMenu(ref float maxLenght)
+    {
+        maxLenght += themeList[themeList.Count - 1].GetCountAllSubScene() * distSubSceneY / 5f;
 
-    //    if (maxLenght < -4f)
-    //    {
-    //        float diff = -maxLenght - 4f;
-    //        background.transform.localScale = new Vector3(background.transform.localScale.x, background.transform.localScale.y + diff, background.transform.localScale.z);
-    //        background.transform.localPosition -= Vector3.up * diff / 2f;
-    //        slider.minY = diff;
-    //    }
-    //    else
-    //        slider.minY = 0f;
-    //}
+        if (maxLenght < -4f)
+        {
+            float diff = -maxLenght - 4f;
+            background.transform.localScale = new Vector3(background.transform.localScale.x, background.transform.localScale.y + diff, background.transform.localScale.z);
+            background.transform.localPosition -= Vector3.up * diff / 2f;
+            slider.minY = diff;
+        }
+        else
+            slider.minY = 0f;
+    }
 
-    //private void SpawnTheme(ref float maxLenght)
-    //{
-    //    int weight = 0;
-    //    for (int i = 0; i < themeList.Count; i++)
-    //    {
-    //        Vector3 distTheme = Vector3.up * i * this.distTheme;
-    //        Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
-    //        GameObject theme = Instantiate(themeList[i].gameObject, transform);
-    //        theme.transform.localPosition = distTheme + distSubScene + offSet;
-    //        maxLenght = theme.transform.localPosition.y;
-    //        weight += themeList[i].GetCountAllSubScene();
-    //    }
-    //}
+    private void SpawnTheme(ref float maxLenght)
+    {
+        int weight = 0;
+        for (int i = 0; i < themeList.Count; i++)
+        {
+            Vector3 distTheme = Vector3.up * i * this.distTheme;
+            Vector3 distSubScene = weight * distSubSceneY / 5f * Vector3.up; // Normaly it's only distSubScene but I dont know why i need to put /5f
+            GameObject theme = Instantiate(themeList[i].gameObject, transform);
+            theme.transform.localPosition = distTheme + distSubScene + offSet;
+            maxLenght = theme.transform.localPosition.y;
+            weight += themeList[i].GetCountAllSubScene();
+        }
+    }
 }
