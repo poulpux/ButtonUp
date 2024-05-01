@@ -34,19 +34,6 @@ public static class ScriptGenerator
         AssetDatabase.Refresh();
     }
 
-    public static void GenerateCooldownScript(string path,string cooldownName)
-    {
-
-        string UpperName = Tools.firstLetterToUpper(cooldownName);
-        string scriptContent = GenerateScriptCooldownContent(UpperName);
-
-        string filePath = Path.Combine(Application.dataPath + path, "Cooldown_"+ UpperName + ".cs");
-
-        // Écriture du contenu dans le fichier
-        File.WriteAllText(filePath, scriptContent);
-        Debug.Log("Script généré : " + "Cooldown_" + UpperName);
-    }
-
     public static void GenerateMVCDesignePatternScript(string path, string cooldownName)
     {
 
@@ -81,7 +68,7 @@ public static class ScriptGenerator
         {
             string upperChildName = Tools.firstLetterToUpper(item);
             string lowerChildName = Tools.firstLetterToLower(item);
-            startContent += lowerChildName + ".InitState(on"+ upperChildName + "Enter, on"+ upperChildName + "Update,on"+upperChildName+ "FixedUpdate, on" + upperChildName + "Exit); ";
+            startContent += lowerChildName + ".InitState(on"+ upperChildName + "Enter, on"+ upperChildName + "Update,on"+upperChildName+ "FixedUpdate, on" + upperChildName + "Exit);\r\n        ";
         }
         return
             "using System.Collections;" +

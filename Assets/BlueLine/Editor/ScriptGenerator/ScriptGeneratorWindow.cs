@@ -6,11 +6,10 @@ using static UnityEditor.VersionControl.Asset;
 
 public partial class ScriptGeneratorWindow : ToolsGF
 {
-    private bool labelEnPlus, cooldownPress, MVCDesignPatternPress;
+    private bool labelEnPlus, MVCDesignPatternPress;
     private string saveName;
     private string StateManager = "StateManager";
     private string MVCDesignPattern = "MVCDesignPattern";
-    private string Cooldown = "Cooldown";
     private List<string> allBouton = new List<string>();
     protected override Vector2 defaultWindowSize { get { return new Vector2(800f, 20f); } }
     public static ScriptGeneratorWindow _window;
@@ -56,9 +55,7 @@ public partial class ScriptGeneratorWindow : ToolsGF
             petitEspace();
             GUILayout.BeginHorizontal();
             GUILayout.Space(25f);
-            if(boutonName == Cooldown && cooldownPress)
-                GUI.skin.button.normal.background = defaultButtonStylePress;
-            else if (boutonName == MVCDesignPattern && MVCDesignPatternPress)
+           if (boutonName == MVCDesignPattern && MVCDesignPatternPress)
                 GUI.skin.button.normal.background = defaultButtonStylePress;
 
 
@@ -75,10 +72,8 @@ public partial class ScriptGeneratorWindow : ToolsGF
     private void defLabelEnPlus()
     {
         labelEnPlus = false;
-        if(cooldownPress || MVCDesignPatternPress)
-        {
+        if( MVCDesignPatternPress)
             labelEnPlus = true;
-        }
     }
 
     private void DisplayLabelEnPlus()
@@ -87,9 +82,7 @@ public partial class ScriptGeneratorWindow : ToolsGF
         {
             petitEspace();
             GUILayout.BeginHorizontal();
-            if(cooldownPress)
-                GUILayout.Label("Nom du Scipts : Cooldown_" + saveName, GUILayout.Width(400f));
-            else if(MVCDesignPatternPress)
+            if(MVCDesignPatternPress)
                 GUILayout.Label("Nom du Scipts : " + saveName, GUILayout.Width(400f));
             saveName = GUILayout.TextArea(saveName);
             GUILayout.EndHorizontal();
@@ -105,12 +98,7 @@ public partial class ScriptGeneratorWindow : ToolsGF
             GUILayout.Space(100f);
             if (GUILayout.Button("Generate Scripts", GUILayout.Width(600f), GUILayout.Height(30f)))
             {
-                if (cooldownPress)
-                {
-                    ScriptGenerator.GenerateScript(ScriptGenerator.GenerateCooldownScript, "", saveName);
-                    cooldownPress = false;
-                }
-                else if (MVCDesignPatternPress)
+                if (MVCDesignPatternPress)
                 {
                     ScriptGenerator.GenerateScript(ScriptGenerator.GenerateMVCDesignePatternScript, "", saveName);
                     MVCDesignPatternPress = false;
@@ -129,15 +117,7 @@ public partial class ScriptGeneratorWindow : ToolsGF
             StateManagerGeneratorWindow.CreatWindow();
         }
         else if (boutonName == MVCDesignPattern)
-        {
             MVCDesignPatternPress = !MVCDesignPatternPress;
-            cooldownPress = false;
-        }
-        else if (boutonName == Cooldown)
-        {
-            cooldownPress = !cooldownPress;
-            MVCDesignPatternPress = false;
-        }
     }
 
     private void setAllBouton()
@@ -145,6 +125,5 @@ public partial class ScriptGeneratorWindow : ToolsGF
         allBouton.Clear();
         allBouton.Add(StateManager);
         allBouton.Add(MVCDesignPattern);
-        allBouton.Add(Cooldown);
     }
 }

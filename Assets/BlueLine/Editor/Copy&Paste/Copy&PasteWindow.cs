@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -18,6 +19,20 @@ struct Bouton
 
 public class CopyPasteWindow : ToolsGF
 {
+    //For adding a content, just put a .txt file in Assets/BlueLine/Editor/Copy&Paste/AllCopyPastTxt folder with the right name
+    private static void setAllBouton()
+    {
+        listBouton.Clear();
+
+        AddButton("Singleton", "Singleton");
+        AddButton("Tooltips", "Tooltips");
+        AddButton("TextArea", "TextArea");
+        AddButton("Cooldown", "Cooldown");
+        AddButton("Ligne fine", "Ligne fine");
+        AddButton("Grosse parenthese", "Grosse parenthese");
+    }
+
+
     private string safeTxt;
     private static List<Bouton> listBouton = new List<Bouton>();
     protected  override Vector2 defaultWindowSize { get { return new Vector2(300f, 1500f ); } }
@@ -41,6 +56,7 @@ public class CopyPasteWindow : ToolsGF
         {
             if (!Start)
                 setAllBouton();
+
             base.OnGUI();
             StartOnGUI(_window, defaultWindowSize);
             displayAllCopyBouton();
@@ -61,9 +77,7 @@ public class CopyPasteWindow : ToolsGF
                 GUI.skin.button.normal.background = defaultButtonStyleNotPress;
 
             if (GUILayout.Button(bouton.name, GUILayout.Width(300f), GUILayout.Height(30f)))
-            {
                 EditorGUIUtility.systemCopyBuffer = bouton.content;
-            }
         }
     }
 
@@ -83,53 +97,22 @@ public class CopyPasteWindow : ToolsGF
             safeTxt = "";
         }
     }
-    
-    private static void  setAllBouton()
+
+    private static void AddButton(string name, string filePath)
     {
-        listBouton.Clear();
-        string singletonContent = 
-            "private static YourClassName instance;\r\n    public static YourClassName Instance { get { return instance; } }\r\n    " +
-            "private void Awake()\r\n    {\r\n        if (instance != null && instance != this)\r\n        {\r\n            " +
-            "Destroy(this.gameObject);\r\n        }\r\n        else\r\n        {\r\n            instance = this;" +
-            "\r\n            DontDestroyOnLoad(this.gameObject);\r\n        }\r\n    }";
-        Bouton Singleton = new Bouton("Singleton", singletonContent);
+        Bouton button = new Bouton(name, GetContent(filePath));
+        listBouton.Add(button);
+    }
 
-        string eventContent = "YourEvent.AddListener(() =>\r\n        {\r\n            \r\n        });";
-        Bouton evente = new Bouton("Add Listener Event", eventContent);
-
-        string serializedFieldContent = "[SerializeField] \r\nprivate";
-        Bouton serializedField = new Bouton("[SerializeField] private", serializedFieldContent);
-        
-        string headerContent = "[Header(\"======YourHeaderName======\")]";
-        Bouton header = new Bouton("Header", headerContent);
-        
-        string toolTipsContent = "[Tooltip (\"\")]";
-        Bouton toolTips = new Bouton("Tooltips", toolTipsContent);
-        
-        string textAreaContent = "[TextArea]\r\nprivate string ";
-        Bouton textArea = new Bouton("TextArea", textAreaContent);
-        
-        string requireContent = "[RequireComponent(typeof(YourNeededComponant))]";
-        Bouton require = new Bouton("Require Componant", requireContent);
-        
-        string editModeContent = "[ExecuteInEditMode]";
-        Bouton editMode = new Bouton("Edit Mode Only", editModeContent);
-        
-        string firstSpaceContent = "//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
-        Bouton firstSpace = new Bouton("Limite épaisse", firstSpaceContent);
-        
-        string secondSpaceContent = "//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
-        Bouton secondSpace = new Bouton("Limite fine", secondSpaceContent);
-
-        listBouton.Add(Singleton);
-        listBouton.Add(evente);
-        listBouton.Add(serializedField);
-        listBouton.Add(header);
-        listBouton.Add(toolTips);
-        listBouton.Add(textArea);
-        listBouton.Add(require);
-        listBouton.Add(editMode);
-        listBouton.Add(firstSpace);
-        listBouton.Add(secondSpace);
+    private static string GetContent(string filePath)
+    {
+        string realFilePath = "Assets/BlueLine/Editor/Copy&Paste/AllCopyPastTxt/" + filePath + ".txt";
+        if (File.Exists(realFilePath))
+            return File.ReadAllText(realFilePath);
+        else
+        {
+            Debug.LogError("Le fichier n'existe pas : " + realFilePath);
+            return "";
+        }
     }
 }

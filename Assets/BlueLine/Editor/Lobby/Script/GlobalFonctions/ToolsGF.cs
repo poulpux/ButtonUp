@@ -59,13 +59,13 @@ public abstract class ToolsGF :  EditorWindow
         }
     }
 
-    public static void StartOnGUI(bool startBool,ref ToolBoxLobby window, Vector2 defaultSize )
-    {
-        if (!startBool)
-        {
-            resizeWindow(window,defaultSize);
-        }
-    }
+    //public static void StartOnGUI(bool startBool,ref ToolBoxLobby window, Vector2 defaultSize )
+    //{
+    //    if (!startBool)
+    //    {
+    //        resizeWindow(window,defaultSize);
+    //    }
+    //}
 
     public static void resizeWindow(EditorWindow window, Vector2 defaultSize)
     {
@@ -116,6 +116,13 @@ public abstract class ToolsGF :  EditorWindow
         GUILayout.Space(petitEspaceValue);
     }
 
+   
+
+    protected void ExportWindowUnity()
+    {
+        ProjectWindowUtil.ShowCreatedAsset(AssetDatabase.LoadAssetAtPath<UnityEngine.Object>("Assets"));
+        EditorApplication.ExecuteMenuItem("Assets/Export Package...");
+    }
 }
 
 
