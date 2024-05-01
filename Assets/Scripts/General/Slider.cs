@@ -51,7 +51,7 @@ public class Slider : MonoBehaviour
         while ((inertia > 0f && positive) || (inertia < 0f && !positive))
         {
             print(inertia);
-            inertia -= positive ? 1f : -1f * Time.fixedDeltaTime * 1f/intertiaDuration;
+            inertia -= positive ? 1f : -1f * Time.deltaTime * 1f/intertiaDuration;
             if (PlayMovement(inertia))
                 yield break;
             else

@@ -115,7 +115,7 @@ public class MenuManager : MonoBehaviour
             Vector3 distSubScene = weight * distResizeY * Vector3.up; 
 
             GameObject theme = Instantiate(themeList[i].gameObject, transform);
-            theme.transform.localPosition = distTheme + distSubScene + offSet;
+            theme.transform.localPosition += distTheme + distSubScene + offSet;
 
             maxLenght = theme.transform.localPosition.y;
             weight += themeList[i].GetCountAllSubScene();

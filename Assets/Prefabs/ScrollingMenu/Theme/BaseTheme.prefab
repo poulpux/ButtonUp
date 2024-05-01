@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 2317237204163381721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,7 +97,8 @@ MonoBehaviour:
   allSubScene:
   - {fileID: 11400000, guid: 9761f48c40f65684881e5470568748ad, type: 2}
   - {fileID: 11400000, guid: dc946a95801c7a94b8595975b6b99b88, type: 2}
-  nameTheme: "Test \xE0 effacer"
+  - {fileID: 11400000, guid: 9761f48c40f65684881e5470568748ad, type: 2}
+  nameTheme: 
   SubScenePrefab: {fileID: 1702862606490522744, guid: c392a106e47dbb34cb2bfae00f3f19e9, type: 3}
 --- !u!114 &1355178510550031073
 MonoBehaviour:
@@ -146,8 +147,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
