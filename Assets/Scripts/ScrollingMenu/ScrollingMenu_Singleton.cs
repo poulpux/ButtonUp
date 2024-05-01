@@ -25,7 +25,9 @@ public class ScrollingMenu_Singleton : MonoBehaviour
     private AnimatingCurve curve = new AnimatingCurve(0f,0f, 0.2f, GRAPH.EASESIN, INANDOUT.IN, LOOP.CLAMP) ;
     private bool isNotInteractible, open;
     private float timeStateChange;
+
     private SubScene currentSubScene;
+
     private static ScrollingMenu_Singleton instance;
     public static ScrollingMenu_Singleton Instance { get { return instance; } }
     private void Awake()
@@ -37,7 +39,6 @@ public class ScrollingMenu_Singleton : MonoBehaviour
         }
         else
             instance = this;
-        Application.targetFrameRate = 100;
     }
 
     void Start()
