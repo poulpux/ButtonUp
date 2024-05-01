@@ -11,18 +11,24 @@ public class MenuManager : MonoBehaviour
     [HideInInspector] public UnityEvent TryCloseEvent = new UnityEvent();
     [HideInInspector] public UnityEvent OnOpenEvent = new UnityEvent();
     [HideInInspector] public UnityEvent OnCloseEvent = new UnityEvent();
-    [HideInInspector] public UnityEvent<SubScene> TrySwitchSubSceneEvent = new UnityEvent<SubScene>();
+    [HideInInspector] public UnityEvent<SubSceneScriptableObject> TrySwitchSubSceneEvent = new UnityEvent<SubSceneScriptableObject>();
+    [Header("======Content======")]
+    [Space(10)]
+    [SerializeField] private List<Theme> themeList;
+
+    [Header("======All Values======")]
+    [Space(10)]
 
     [SerializeField] private float closePosX, openPosX;
-    [SerializeField] private SpriteRenderer cacheNoir;
-    [SerializeField] private List<Theme> themeList;
     [SerializeField] private Vector3 offSet;
-    [SerializeField] private Slider slider;
-    [SerializeField] private GameObject background;
-
-
     public float distSubSceneY, distSubSceneX, distTheme;
     public Vector3 localPosIcon;
+
+    [Header("======Visuel======")]
+    [Space(10)]
+    [SerializeField] private Slider slider;
+    [SerializeField] private GameObject background;
+    [SerializeField] private SpriteRenderer cacheNoir;
 
     private AnimatingCurve curve = new AnimatingCurve(0f,0f, 0.2f, GRAPH.EASESIN, INANDOUT.IN, LOOP.CLAMP) ;
     private bool isNotInteractible, open;
@@ -66,7 +72,7 @@ public class MenuManager : MonoBehaviour
         themeList.Clear();
     }
 
-    private void SwitchSubScene(SubScene subScene)
+    private void SwitchSubScene(SubSceneScriptableObject subSceneScriptableObject)
     {
 
     }
