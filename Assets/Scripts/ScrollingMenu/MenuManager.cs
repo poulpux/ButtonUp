@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     [HideInInspector] public UnityEvent OnOpenEvent = new UnityEvent();
     [HideInInspector] public UnityEvent OnCloseEvent = new UnityEvent();
     [HideInInspector] public UnityEvent<SubSceneScriptableObject> TrySwitchSubSceneEvent = new UnityEvent<SubSceneScriptableObject>();
+
     [Header("======Content======")]
     [Space(10)]
     [SerializeField] private List<Theme> themeList;
@@ -30,6 +31,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject background;
     [SerializeField] private SpriteRenderer cacheNoir;
 
+
+    // ANIMATION OPEN / CLOSE
     private AnimatingCurve curve = new AnimatingCurve(0f,0f, 0.2f, GRAPH.EASESIN, INANDOUT.IN, LOOP.CLAMP) ;
     private bool isNotInteractible, open;
     private float timeStateChange;
@@ -110,8 +113,10 @@ public class MenuManager : MonoBehaviour
         {
             Vector3 distTheme = Vector3.up * i * this.distTheme;
             Vector3 distSubScene = weight * distResizeY * Vector3.up; 
+
             GameObject theme = Instantiate(themeList[i].gameObject, transform);
             theme.transform.localPosition = distTheme + distSubScene + offSet;
+
             maxLenght = theme.transform.localPosition.y;
             weight += themeList[i].GetCountAllSubScene();
         }
