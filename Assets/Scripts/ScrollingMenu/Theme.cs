@@ -50,12 +50,6 @@ public class Theme : MonoBehaviour
         subScene.transform.localPosition = Vector3.up * MenuManager.Instance.distSubSceneY * (i + 1) + Vector3.right * MenuManager.Instance.distSubSceneX;
         subScene.GetComponent<SubScene>().subSceneSO = allSubScene[i];
 
-        TextMeshPro text = subScene.GetComponent<TextMeshPro>();
-        text.text = allSubScene[i].namee;
-
-        GameObject icone = Instantiate(allSubScene[i].icon, subScene.transform);
-        icone.transform.localPosition = MenuManager.Instance.localPosIcon;
-
         return subScene;
     }
 

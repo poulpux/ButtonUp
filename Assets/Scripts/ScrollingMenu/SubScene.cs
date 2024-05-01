@@ -9,6 +9,7 @@ public class SubScene : MonoBehaviour, ICliquable
 {
     public Collider2D colliderr { get => _collider; set => _collider = value; }  
     private Collider2D _collider;
+
     [HideInInspector] public TextMeshPro text;
     [HideInInspector] public SubSceneScriptableObject subSceneSO;
 
